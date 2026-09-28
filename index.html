@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atento Sec 2026</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-bg" aria-hidden="true"></div>
+
+  <main class="shell">
+    <!-- INICIO -->
+    <section id="screenStart" class="screen active">
+      <div class="start-card">
+        <div class="brand-pill">ATENTO SEC · 2026</div>
+        <div class="start-icon">◈</div>
+        <h1>Bienvenido a Atento Sec 2026</h1>
+        <p class="lead">Revisa el contenido completo del curso y, al finalizar, presenta la evaluación.</p>
+        <div class="start-meta">
+          <span>119 contenidos</span>
+          <span>15 reactivos</span>
+          <span>80% mínimo aprobatorio</span>
+        </div>
+        <button class="btn btn-primary btn-large" id="btnStart">Comenzar curso</button>
+      </div>
+    </section>
+
+    <button class="btn btn-secondary admin-btn" id="btnAdmin">
+      ⚙
+  </button>
+
+    <!-- CURSO -->
+    <section id="screenCourse" class="screen">
+      <div class="course-card">
+        <header class="course-header">
+          <div>
+            <span class="eyebrow">ATENTO SEC 2026</span>
+            <h2>Contenido del curso</h2>
+          </div>
+          <div class="counter-badge" id="courseCounter">1 / 119</div>
+        </header>
+
+        <div class="course-stage">
+          <img id="courseImage" alt="Contenido del curso">
+          <div id="imageFallback" class="image-fallback hidden">
+            <div class="fallback-icon">▧</div>
+            <strong id="fallbackTitle">Imagen no encontrada</strong>
+            <span id="fallbackText">Agrega la imagen correspondiente a la carpeta imagenes.</span>
+          </div>
+        </div>
+
+        <footer class="course-footer">
+          <div class="progress-wrap">
+            <div class="progress-track"><div id="courseProgress" class="progress-fill"></div></div>
+            <span id="courseProgressText">Contenido 1 de 119</span>
+          </div>
+          <div class="nav-actions">
+            <button class="btn btn-secondary" id="btnPrev">← Regresar</button>
+            <button class="btn btn-primary" id="btnNext">Continuar →</button>
+          </div>
+        </footer>
+      </div>
+    </section>
+
+    <!-- MODAL FIN DE CURSO -->
+    <div id="courseModal" class="modal" aria-hidden="true">
+      <div class="modal-card">
+        <div class="modal-check">✓</div>
+        <span class="eyebrow">CONTENIDO COMPLETADO</span>
+        <h2>Terminaste el curso</h2>
+        <p>Ahora comenzarás la evaluación de Atento Sec 2026.</p>
+        <div class="score-rule">
+          <span>Calificación mínima aprobatoria</span>
+          <strong>80%</strong>
+        </div>
+        <button class="btn btn-primary btn-large" id="btnOpenData">Continuar a evaluación</button>
+      </div>
+    </div>
+
+    <!-- DATOS -->
+    <section id="screenData" class="screen">
+      <div class="assessment-card data-card">
+        <header class="assessment-header">
+          <div>
+            <span class="eyebrow">EVALUACIÓN · DATOS DEL PARTICIPANTE</span>
+            <h2>Antes de comenzar</h2>
+          </div>
+          <div class="question-badge">0 / 15</div>
+        </header>
+
+        <div class="data-copy">
+          <p>Captura tus datos. <strong>Nombre y SAP no forman parte de la calificación.</strong></p>
+        </div>
+
+        <div class="fields">
+          <label class="field">
+            <span>Nombre completo</span>
+            <input id="participantName" type="text" autocomplete="name" placeholder="Escribe tu nombre completo">
+            <small id="nameError"></small>
+          </label>
+          <label class="field">
+            <span>SAP</span>
+            <input id="participantSap" type="text" inputmode="numeric" autocomplete="off" placeholder="Ingresa tu SAP">
+            <small id="sapError"></small>
+          </label>
+        </div>
+
+        <div class="single-action">
+          <button class="btn btn-primary btn-large" id="btnBeginQuiz">Iniciar evaluación →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVALUACIÓN -->
+    <section id="screenQuiz" class="screen">
+      <div class="assessment-card">
+        <header class="assessment-header">
+          <div>
+            <span class="eyebrow">EVALUACIÓN ATENTO SEC 2026</span>
+            <h2 id="questionTitle">Pregunta</h2>
+          </div>
+          <div id="questionBadge" class="question-badge">1 / 15</div>
+        </header>
+
+        <div class="quiz-progress">
+          <div class="progress-track"><div id="quizProgress" class="progress-fill"></div></div>
+        </div>
+
+        <div id="questionBody" class="question-body"></div>
+        <div id="quizMessage" class="form-message" role="alert"></div>
+
+        <footer class="quiz-footer">
+          <button class="btn btn-secondary" id="btnQuizPrev">← Regresar</button>
+          <button class="btn btn-primary" id="btnQuizNext">Continuar →</button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- RESULTADO -->
+    <section id="screenResult" class="screen">
+      <div class="result-card">
+        <div id="resultIcon" class="result-icon">✓</div>
+        <span class="eyebrow">EVALUACIÓN FINALIZADA</span>
+        <h2 id="resultStatus">Resultado</h2>
+
+        <div class="result-score">
+          <span id="scoreNumber">0%</span>
+          <small>Calificación final</small>
+        </div>
+
+        <div class="result-grid">
+          <div><span>Nombre</span><strong id="resultName">—</strong></div>
+          <div><span>SAP</span><strong id="resultSap">—</strong></div>
+          <div><span>Aciertos</span><strong id="resultHits">0 / 15</strong></div>
+          <div><span>Mínimo</span><strong>80%</strong></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+  <script src="preguntas.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

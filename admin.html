@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Administrador | Atento Sec 2026</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<style>
+
+.admin-container{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.admin-card{
+    background:white;
+    width:420px;
+    padding:40px;
+    border-radius:24px;
+    text-align:center;
+    box-shadow:0 20px 50px rgba(0,0,0,.15);
+}
+
+.admin-card h1{
+    margin-bottom:10px;
+}
+
+.admin-card input{
+    width:100%;
+    padding:14px;
+    margin:20px 0;
+    border-radius:10px;
+    border:1px solid #ddd;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#0066cc;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+#panel{
+    display:none;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="admin-container">
+
+
+<div class="admin-card" id="login">
+
+<h1>Panel administrador</h1>
+
+<p>
+Ingresa la contraseña para descargar resultados.
+</p>
+
+
+<input 
+type="password" 
+id="password"
+placeholder="Contraseña">
+
+
+<button onclick="validarAcceso()">
+Ingresar
+</button>
+
+
+</div>
+
+
+
+<div class="admin-card" id="panel">
+
+<h1>Resultados</h1>
+
+<p>
+Descarga el reporte completo de evaluaciones.
+</p>
+
+
+<button onclick="exportarExcel()">
+📊 Descargar Excel
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+
+
+<script>
+
+
+const PASSWORD_ADMIN = "At3nt0*2026/resultado";
+
+
+function validarAcceso(){
+
+const pass = document.getElementById("password").value;
+
+
+if(pass === PASSWORD_ADMIN){
+
+document.getElementById("login").style.display="none";
+
+document.getElementById("panel").style.display="block";
+
+
+}else{
+
+alert("Contraseña incorrecta");
+
+}
+
+
+}
+
+
+
+
+
+async function exportarExcel(){
+
+
+const {data,error}=await supabaseClient
+
+.from("intentos")
+
+.select(`
+    id,
+    created_at,
+    numero_intento,
+    calificacion,
+    resultado,
+    total_preguntas,
+    respuestas_correctas,
+
+    participantes(
+        nombre,
+        sap
+    )
+`);
+
+
+
+
+if(error){
+
+console.error(error);
+
+alert("Error obteniendo datos");
+
+return;
+
+}
+
+
+
+
+const filas=data.map(item=>({
+
+Nombre:item.participantes?.nombre || "",
+
+SAP:item.participantes?.sap || "",
+
+Fecha:item.created_at,
+
+Intento:item.numero_intento,
+
+Calificacion:item.calificacion+"%",
+
+Resultado:item.resultado,
+
+Aciertos:item.respuestas_correctas,
+
+Total:item.total_preguntas
+
+
+}));
+
+
+
+
+const hoja=XLSX.utils.json_to_sheet(filas);
+
+
+const libro=XLSX.utils.book_new();
+
+
+XLSX.utils.book_append_sheet(
+libro,
+hoja,
+"Resultados"
+);
+
+
+
+XLSX.writeFile(
+libro,
+"Resultados_Atento_Sec_2026.xlsx"
+);
+
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
